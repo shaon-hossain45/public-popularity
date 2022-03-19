@@ -24,11 +24,21 @@ class Public_Popularity_Admin_Display {
 		$this->admin_display_load_dependencies();
 
 		// Menu base setup
-		$MenuBaseObj = new MenuBaseSetup();
+		if ( class_exists( 'MenuBaseSetup' ) ) {
+			$MenuBaseObj = new MenuBaseSetup();
+		}
+
 		// Menu setup
-		$MenuPageObj = new MenuSetup( $MenuBaseObj );
+		if ( class_exists( 'MenuSetup' ) ) {
+			$MenuPageObj = new MenuSetup( $MenuBaseObj );
+		}
+
 		$this->dispatch_actions( $MenuPageObj );
 
+		// Custom post type
+		if ( class_exists( 'CptBaseSetup' ) ) {
+			$cptBaseObj = new CptBaseSetup();
+		}
 	}
 
 	/**
@@ -54,52 +64,7 @@ class Public_Popularity_Admin_Display {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'partials/menu/class-menu-base.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'partials/menu/class-menu.php';
-	}
-
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Public_Popularity_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Public_Popularity_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/public-popularity-admin.css', array(), $this->version, 'all' );
-
-	}
-
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Public_Popularity_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Public_Popularity_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/public-popularity-admin.js', array( 'jquery' ), $this->version, false );
-
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'partials/cpt/custom-base.php';
 	}
 
 	/**
@@ -113,7 +78,5 @@ class Public_Popularity_Admin_Display {
 		add_action( 'admin_menu', array( $data, 'wpdocs_register_my_custom_menu_page' ) );
 		// Register a sub menu page.
 		add_action( 'admin_menu', array( $data, 'wpdocs_register_my_custom_submenu_page' ) );
-
 	}
-
 }

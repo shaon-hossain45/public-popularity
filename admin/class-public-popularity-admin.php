@@ -53,8 +53,9 @@ class Public_Popularity_Admin {
 		$this->version     = $version;
 
 		$this->admin_load_dependencies();
-		new Public_Popularity_Admin_Display();
-
+		if ( class_exists( 'Public_Popularity_Admin_Display' ) ) {
+			new Public_Popularity_Admin_Display();
+		}
 	}
 
 	/**

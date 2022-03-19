@@ -21,7 +21,6 @@
  * @author     shaon <shaonhossain615@gmail.com>
  */
 class Public_Popularity_Activator {
-
 	/**
 	 * Short Description. (use period)
 	 *
@@ -32,6 +31,7 @@ class Public_Popularity_Activator {
 	public static function activate() {
 		self::add_version();
 		self::create_table();
+		self::page_create();
 	}
 
 	/**
@@ -74,4 +74,31 @@ class Public_Popularity_Activator {
 		dbDelta( $schema );
 	}
 
+
+	protected static function page_create() {
+		// Public Popularity page
+		if ( is_admin() ) {
+
+			$new_page_title    = 'Public Popularity';
+			$new_page_content  = '';
+			$new_page_template = ''; // ex. template-custom.php. Leave blank if you don't want a custom page template.
+
+			// don't change the code bellow, unless you know what you're doing
+
+			$page_check = get_page_by_title( $new_page_title );
+			$new_page   = array(
+				'post_type'    => 'page',
+				'post_title'   => $new_page_title,
+				'post_content' => $new_page_content,
+				'post_status'  => 'publish',
+				'post_author'  => 1,
+			);
+			if ( ! isset( $page_check->ID ) ) {
+				$new_page_id = wp_insert_post( $new_page );
+				if ( ! empty( $new_page_template ) ) {
+					update_post_meta( $new_page_id, '_wp_page_template', $new_page_template );
+				}
+			}
+		}
+	}
 }

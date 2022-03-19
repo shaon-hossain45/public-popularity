@@ -52,8 +52,36 @@ class Public_Popularity_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		$this->public_load_dependencies();
+		if ( class_exists( 'Public_Popularity_Public_Display' ) ) {
+			new Public_Popularity_Public_Display();
+		}
+
 	}
 
+/**
+	 * Load the required dependencies for this plugin.
+	 *
+	 * Include the following files that make up the plugin:
+	 *
+	 * - Public_Popularity_Loader. Orchestrates the hooks of the plugin.
+	 * - Public_Popularity_i18n. Defines internationalization functionality.
+	 * - Public_Popularity_Admin. Defines all hooks for the admin area.
+	 * - Public_Popularity_Public. Defines all hooks for the public side of the site.
+	 *
+	 * Create an instance of the loader which will be used to register the hooks
+	 * with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function public_load_dependencies() {
+		/**
+		 * The class responsible for orchestrating the actions and filters of the
+		 * core plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/public-popularity-public-display.php';
+	}
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
@@ -73,6 +101,8 @@ class Public_Popularity_Public {
 		 * class.
 		 */
 
+		wp_enqueue_style( 'carouselcss', plugin_dir_url( __FILE__ ) . 'css/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css', array(), '2.3.4', 'all' );
+		wp_enqueue_style( 'carouseldefault', plugin_dir_url( __FILE__ ) . 'css/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css', array(), '2.3.4', 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/public-popularity-public.css', array(), $this->version, 'all' );
 
 	}
@@ -96,6 +126,7 @@ class Public_Popularity_Public {
 		 * class.
 		 */
 
+		wp_enqueue_script( 'carouseljs', plugin_dir_url( __FILE__ ) . 'js/OwlCarousel2-2.3.4/dist/owl.carousel.min.js', array( 'jquery' ), '2.3.4', false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/public-popularity-public.js', array( 'jquery' ), $this->version, false );
 
 	}
