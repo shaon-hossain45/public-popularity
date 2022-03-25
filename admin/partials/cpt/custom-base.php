@@ -6,8 +6,8 @@
  * @link       https://github.com/shaon-hossain45/
  * @since      1.0.0
  *
- * @package    Itechpublic_Newsletter
- * @subpackage Itechpublic_Newsletter/admin/partials
+ * @package    public_plugin
+ * @subpackage public_plugin/admin/partials
  */
 
 if ( ! class_exists( 'CptBaseSetup' ) ) {
@@ -67,6 +67,7 @@ if ( ! class_exists( 'CptBaseSetup' ) ) {
 				'show_ui'             => true,
 				'show_in_menu'        => true,
 				'menu_position'       => 5,
+				'menu_icon'           => 'dashicons-welcome-widgets-menus',
 				'show_in_admin_bar'   => true,
 				'show_in_nav_menus'   => true,
 				'can_export'          => true,

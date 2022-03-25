@@ -6,8 +6,8 @@
  * @link       https://github.com/shaon-hossain45/
  * @since      1.0.0
  *
- * @package    Itechpublic_Newsletter
- * @subpackage Itechpublic_Newsletter/admin/partials
+ * @package    public_plugin
+ * @subpackage public_plugin/admin/partials
  */
 
 if ( ! class_exists( 'MenuSetup' ) ) {
